@@ -30,8 +30,8 @@ awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 		exc=trim(exc)
 		hasInc=length(inc) > 0;
 		hasExc=length(exc) > 0;
-		printf "inc: %s; hasInc: %d\n", inc, hasInc;
-		printf "exc: %s; hasExc: %d\n", exc, hasExc;
+		#printf "inc: %s; hasInc: %d\n", inc, hasInc;
+		#printf "exc: %s; hasExc: %d\n", exc, hasExc;
 		
 		incCharsLen = split(inc, incChars, "")
 		for (i = 1; i <= incCharsLen; i++) {
@@ -117,7 +117,7 @@ awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 		for(i in a) k++
 		return k
 	}	
-' $IFILE | sort -u
+' $IFILE | sort -u | grep -E '^[A-Za-z]+$'
 
 
 
