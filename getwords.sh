@@ -19,6 +19,8 @@ EXC=$3
 
 awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 	BEGIN {
+		FS="[ .,]"
+	
 		inc=trim(inc)
 		exc=trim(exc)
 		hasInc=length(inc) > 0;
@@ -31,9 +33,7 @@ awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 			printf "    - INC_CHAR[%s]\n", incChars[i]
 		}
 		exc="[" exc "]"
-		FS="[ .,]"
-	}
-	
+	}	
 	{
 		for (i = 1; i <= NF; i++) {
 			word=tolower($i)
