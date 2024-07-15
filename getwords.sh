@@ -6,23 +6,16 @@
 #	- and does not contain ANY excluded cgaracters
 ########################################################################################
 
-if [ $# -ne 4 ]
+if [ $# -ne 3 ]
 then
 	app=`basename $0`
-	echo "Usage: $app <len> <letters-included> <letters-excluded> <input-file>" 1>&2
+	echo "Usage: $app <len> <letters-included> <letters-excluded>" 1>&2
 	exit 1
 fi
 
 LEN=$1
 INC=$2
 EXC=$3
-IFILE=$4
-
-if [ ! -f $IFILE ]
-then
-	echo "$IFILE : input file not found" 1>&2
-	exit 1
-fi
 
 awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 	BEGIN {
@@ -38,6 +31,7 @@ awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 			printf "    - INC_CHAR[%s]\n", incChars[i]
 		}
 		exc="[" exc "]"
+		FS="[ .,]"
 	}
 	
 	{
@@ -117,7 +111,7 @@ awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 		for(i in a) k++
 		return k
 	}	
-' $IFILE | sort -u | grep -E '^[A-Za-z]+$'
+' | sort -u | grep -E '^[A-Za-z]+$'
 
 
 
