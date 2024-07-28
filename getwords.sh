@@ -10,6 +10,7 @@ if [ $# -ne 3 ]
 then
 	app=`basename $0`
 	echo "Usage: $app <len> <letters-included> <letters-excluded>" 1>&2
+	echo "       len <= 0 : any length" 1>&2
 	exit 1
 fi
 
