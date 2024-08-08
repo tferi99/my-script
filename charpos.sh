@@ -2,12 +2,12 @@
 if [ $# -ne 2 ]
 then
 	app=`basename $0`
-	echo "Usage: $app <position> <character>" 1>&2
+	echo "Usage: $app <character> <position>" 1>&2
 	exit 1
 fi
 
-POS=$1
-CHAR=$2
+CHAR=$1
+POS=$2
 
 awk -v pos=$POS -v char=$CHAR '
 	BEGIN {
@@ -29,4 +29,4 @@ awk -v pos=$POS -v char=$CHAR '
 		gsub("[ ]*$", "", s)
 		return s
 	}	
-'
+' | sort -u
