@@ -6,17 +6,30 @@
 #	- and does not contain ANY excluded cgaracters
 ########################################################################################
 
-if [ $# -ne 3 ]
+if [ $# -lt 1 -a $# -gt 3 ]
 then
 	app=`basename $0`
-	echo "Usage: $app <len> <letters-included> <letters-excluded>" 1>&2
+	echo "Usage: $app [[[<len>] <letters-included>] <letters-excluded>]" 1>&2
 	echo "       len <= 0 : any length" 1>&2
 	exit 1
 fi
 
+
 LEN=$1
 INC=$2
 EXC=$3
+
+if [ -z $1 ]
+then
+	echo 'EMPTY 1'
+	LEN=0
+fi
+
+if ! [[ "$LEN" =~ ^[0-9]+$ ]]
+then
+	echo "$LEN : is not a number" 1>&2
+	exit 2
+fi
 
 awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 	BEGIN {
@@ -77,11 +90,14 @@ awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 						print word
 					}
 				}			
-				else {
+				else if (hasExc) {
 					if (word !~ exc) {
 						print word
 					}
-				}			
+				}
+				else {
+					print word
+				}
 			}
 		}
 	}
