@@ -49,6 +49,7 @@ awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 		exc="[" exc "]"
 	}	
 	{
+		# NOTE: word !~ "[" + exc + "]" : it means that work does not contain ANY characters from exc
 		for (i = 1; i <= NF; i++) {
 			word=tolower($i)
 			word=trim(word)
@@ -102,6 +103,7 @@ awk -v len="$LEN" -v inc="$INC" -v exc="$EXC" '
 		}
 	}
 
+	# all characters can be found in string
 	function containsAll(str, chars, charsLen)
 	{
 		#printf ">>> containsAll [%s][%d]\n",  str, charsLen
